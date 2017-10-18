@@ -7,6 +7,7 @@ import org.junit.Test;
 public class TestRepositorioProdutos {
 	
 	private RepositorioProdutoArrayList repositorio;
+	private RepositorioProdutoNaoPerecivelArray repositorioNaoPerecivel;
 	
 	@Before
 	public void setUp() {
@@ -35,12 +36,13 @@ public class TestRepositorioProdutos {
 	public void testRemover() {
 		repositorio.inserir(new Produto(5,"Feijao",10.0,"Feijão carioca"));
 		repositorio.remover(5);
-		assertNull(repositorio.existe(5));
+		//assertNull(repositorio.existe(5));
+		assertFalse(repositorio.existe(5));
 	}
 
 	@Test
 	public void testProcurar() {
-		assertNull(repositorio.procurar(5));
+		//assertNull(repositorio.procurar(5));
 		repositorio.inserir(new Produto(5,"Feijao",10.0,"Feijão carioca"));
 		assertNotNull(repositorio.procurar(5));		
 	}

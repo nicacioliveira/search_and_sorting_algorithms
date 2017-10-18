@@ -1,0 +1,5 @@
+1) Interfaces em java, servem para situações onde queremos garantir um comportamento específico.
+	Exemplo: Quando queremos que classes sejam obrigadas a ter determinadas assinaturas e retornos de métodos
+			para garantirmos uma integridade do que é esperado em determinadas classes.
+
+2) 

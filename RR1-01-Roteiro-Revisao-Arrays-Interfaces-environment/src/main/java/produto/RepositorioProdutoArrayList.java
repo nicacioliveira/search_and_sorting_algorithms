@@ -17,7 +17,7 @@ public class RepositorioProdutoArrayList {
 	 * A estrutura onde os produtos sao mantidos. Voce nao precisa se preocupar
 	 * por enquanto com o uso de generics em ArrayList.
 	 */
-	private ArrayList produtos;
+	private ArrayList<Produto> produtos;
 
 	/**
 	 * A posicao do ultimo elemento inserido no array de produtos. o valor
@@ -27,7 +27,7 @@ public class RepositorioProdutoArrayList {
 
 	public RepositorioProdutoArrayList(int size) {
 		super();
-		this.produtos = new ArrayList();
+		this.produtos = new ArrayList<Produto>();
 	}
 
 	/**
@@ -40,8 +40,14 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	private int procurarIndice(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int result = -1;
+		for (int i = 0; i < this.produtos.size(); i++) {
+			if (this.produtos.get(i).getCodigo() == codigo) {
+				result = i;
+				break;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -51,26 +57,29 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	public boolean existe(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int result = procurarIndice(codigo);
+		return result != -1;
 	}
 
 	/**
 	 * Insere um novo produto (sem se preocupar com duplicatas)
 	 */
 	public void inserir(Produto produto) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (produto != null) this.produtos.add(produto);
 	}
 
 	/**
 	 * Atualiza um produto armazenado ou retorna um erro caso o produto nao
 	 * esteja no array. Note que, para localizacao, o código do produto será
 	 * utilizado.
+	 * @throws FileNotFoundException 
 	 */
 	public void atualizar(Produto produto) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int index = this.procurarIndice(produto.getCodigo());
+		if (index == -1) {
+			throw new RuntimeException();
+		}
+		this.produtos.set(index, produto);
 	}
 
 	/**
@@ -79,10 +88,16 @@ public class RepositorioProdutoArrayList {
 	 * array.
 	 * 
 	 * @param codigo
+	 * @throws FileNotFoundException 
 	 */
 	public void remover(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		for (int i = 0; i < this.produtos.size(); i++) {
+			if (this.produtos.get(i).getCodigo() == codigo) {
+				this.produtos.remove(i);
+				return; // para que o m�todo nao passe para o throws a baixo
+			}
+		}
+		throw new RuntimeException();
 	}
 
 	/**
@@ -91,9 +106,17 @@ public class RepositorioProdutoArrayList {
 	 * 
 	 * @param codigo
 	 * @return
+	 * @throws FileNotFoundException 
 	 */
 	public Produto procurar(int codigo) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		Produto produto = null;
+		for (int i = 0; i < this.produtos.size(); i++) {
+			produto = this.produtos.get(i);
+			if (produto.getCodigo() == codigo) {
+				return produto;
+			}
+		}
+		
+		throw new RuntimeException();
 	}
 }
