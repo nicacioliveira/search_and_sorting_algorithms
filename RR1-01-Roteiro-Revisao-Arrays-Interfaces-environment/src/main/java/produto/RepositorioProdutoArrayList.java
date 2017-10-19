@@ -11,13 +11,14 @@ import java.util.ArrayList;
  *
  * @author Adalberto
  */
-public class RepositorioProdutoArrayList {
+public class RepositorioProdutoArrayList implements IrepositorioProduto{
 
 	/**
 	 * A estrutura onde os produtos sao mantidos. Voce nao precisa se preocupar
 	 * por enquanto com o uso de generics em ArrayList.
 	 */
-	private ArrayList<Produto> produtos;
+	@SuppressWarnings("rawtypes")
+	private ArrayList produtos;
 
 	/**
 	 * A posicao do ultimo elemento inserido no array de produtos. o valor
@@ -25,9 +26,10 @@ public class RepositorioProdutoArrayList {
 	 */
 	private int index = -1;
 
+	@SuppressWarnings("rawtypes")
 	public RepositorioProdutoArrayList(int size) {
 		super();
-		this.produtos = new ArrayList<Produto>();
+		this.produtos = new ArrayList();
 	}
 
 	/**
@@ -40,14 +42,7 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	private int procurarIndice(int codigo) {
-		int result = -1;
-		for (int i = 0; i < this.produtos.size(); i++) {
-			if (this.produtos.get(i).getCodigo() == codigo) {
-				result = i;
-				break;
-			}
-		}
-		return result;
+		return this.produtos.indexOf(new Produto(codigo, null, 0.0, null));
 	}
 
 	/**
@@ -57,13 +52,13 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	public boolean existe(int codigo) {
-		int result = procurarIndice(codigo);
-		return result != -1;
+		return this.produtos.contains(new Produto(codigo, null, 0.0, null));
 	}
 
 	/**
 	 * Insere um novo produto (sem se preocupar com duplicatas)
 	 */
+	@SuppressWarnings("unchecked")
 	public void inserir(Produto produto) {
 		if (produto != null) this.produtos.add(produto);
 	}
@@ -74,12 +69,18 @@ public class RepositorioProdutoArrayList {
 	 * utilizado.
 	 * @throws FileNotFoundException 
 	 */
+	@SuppressWarnings("unchecked")
 	public void atualizar(Produto produto) {
-		int index = this.procurarIndice(produto.getCodigo());
-		if (index == -1) {
-			throw new RuntimeException();
+		if (produto != null) {
+			int index = this.procurarIndice(produto.getCodigo());
+			if (index == -1) {
+				throw new RuntimeException();
+			}
+			this.produtos.set(index, produto);
+		} else {
+			throw new RuntimeException("Erro no objeto que foi passado par ao método.");
 		}
-		this.produtos.set(index, produto);
+		
 	}
 
 	/**
@@ -91,13 +92,11 @@ public class RepositorioProdutoArrayList {
 	 * @throws FileNotFoundException 
 	 */
 	public void remover(int codigo) {
-		for (int i = 0; i < this.produtos.size(); i++) {
-			if (this.produtos.get(i).getCodigo() == codigo) {
-				this.produtos.remove(i);
-				return; // para que o método nao passe para o throws a baixo
-			}
+		if (this.existe(codigo)) {
+			this.produtos.remove(new Produto(codigo, null, 0.0, null));
+		} else {
+			throw new RuntimeException("O produto não existe.");
 		}
-		throw new RuntimeException();
 	}
 
 	/**
@@ -109,14 +108,12 @@ public class RepositorioProdutoArrayList {
 	 * @throws FileNotFoundException 
 	 */
 	public Produto procurar(int codigo) {
-		Produto produto = null;
-		for (int i = 0; i < this.produtos.size(); i++) {
-			produto = this.produtos.get(i);
-			if (produto.getCodigo() == codigo) {
-				return produto;
-			}
+		if (this.existe(codigo)) {
+			int indice = this.procurarIndice(codigo);
+			return (Produto) this.produtos.get(indice);
+		} else {
+			throw new RuntimeException("O produto não existe.");
 		}
-		
-		throw new RuntimeException();
+	
 	}
 }
