@@ -14,8 +14,12 @@ public class QuickSortDualPivot<T extends Comparable<T>> extends AbstractSorting
 
     private void quickSortDualPivot(T[] array, int leftIndex, int rightIndex) {
 
-    }
+        T pivot1 = array[leftIndex];
+        T pivot2 = array[rightIndex];
 
+        // partition
+
+    }
 
 
 }

@@ -1,10 +1,6 @@
 package main.sorting_algorithms.nlogn;
 
 import main.sorting.AbstractSorting;
-import util.Util;
-
-import java.util.Arrays;
-
 import static util.Util.swap;
 
 public class ThreeWayQuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
@@ -15,24 +11,20 @@ public class ThreeWayQuickSort<T extends Comparable<T>> extends AbstractSorting<
     }
 
     private void threeWayQuickSort(T[] array, int leftIndex, int rightIndex) {
-
         if (leftIndex < rightIndex) {
-            int[] pivots = getPivots(array, leftIndex, rightIndex);
-            threeWayQuickSort(array, leftIndex, pivots[0] - 1);
-            threeWayQuickSort(array, pivots[1] + 1, rightIndex);
-        }
-    }
+            int k = leftIndex, i = leftIndex, j = rightIndex;
+            T pivotObj = array[leftIndex];
 
-    private int[] getPivots(T[] array, int l, int r) {
-        int min = l, max = r, i = l;
-        T cmp = array[l];
-        while (i <= max)
-            if (array[i].compareTo(cmp) < 0)
-                swap(array, i++, min++);
-            else if (array[i].compareTo(cmp) > 0)
-                swap(array, i, max--);
-            else
-                i++;
-        return new int[]{min, max};
+            while (k <= j)
+                if (array[k].compareTo(pivotObj) == -1)
+                    swap(array, i++, k++);
+                else if (array[k].compareTo(pivotObj) == 1)
+                    swap(array, k, j--);
+                else
+                    k++;
+
+            sort(array, leftIndex, i-1);
+            sort(array, j+1, rightIndex);
+        }
     }
 }
