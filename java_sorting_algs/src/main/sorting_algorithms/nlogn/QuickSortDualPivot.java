@@ -14,11 +14,32 @@ public class QuickSortDualPivot<T extends Comparable<T>> extends AbstractSorting
 
     private void quickSortDualPivot(T[] array, int leftIndex, int rightIndex) {
 
-        T pivot1 = array[leftIndex];
-        T pivot2 = array[rightIndex];
+        if (leftIndex < rightIndex) {
 
-        // partition
+            int p1 = particiona(array, leftIndex, rightIndex);
+            int p2 = particiona(array, p1, rightIndex);
 
+            quickSortDualPivot(array, leftIndex, p1 - 1);
+            quickSortDualPivot(array, p1 + 1, p2 - 1);
+            quickSortDualPivot(array, p2 + 1, rightIndex);
+        }
+    }
+
+    private int particiona(T[] array, int leftIndex, int rightIndex) {
+
+        int i = leftIndex;
+        int j = rightIndex;
+        T pivotObj = array[leftIndex];
+
+        while (i < j) {
+            while (i < rightIndex && array[i].compareTo(pivotObj) <= 0) i++;
+            while (j > leftIndex && array[j].compareTo(pivotObj) > 0) j--;
+            if (i < j) Util.swap(array, i, j);
+        }
+
+        Util.swap(array, leftIndex, j);
+
+        return j;
     }
 
 

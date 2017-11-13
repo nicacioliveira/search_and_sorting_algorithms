@@ -16,18 +16,17 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
     private void combSort(T[] array, int leftIndex, int rightIndex) {
 
-        int gap = getGap(rightIndex - leftIndex);
-        int i = leftIndex;
-        boolean swap = true;
-
-        while (gap > 1 && swap) {
-            swap = false;
+        int gap = getGap(rightIndex - leftIndex + 1);
+        boolean sorted = false;
+        int i = 0;
+        while (gap > 1 && !sorted) {
+            sorted = true;
             gap = getGap(gap);
             i = leftIndex;
-            while ((i + gap) <= rightIndex) {
-                if (array[i].compareTo(array[i + gap]) > 0) {
-                    swap(array, i, i + gap);
-                    swap = true;
+            while (gap + i <= rightIndex) {
+                if (array[i].compareTo(array[gap + i]) >= 0) {
+                    swap(array, i, gap + i);
+                    sorted = false;
                 }
                 i++;
             }
@@ -38,7 +37,7 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
         gap = (int) (gap / SHRINK_FACTOR);
         if (gap == 9 || gap == 10)
             gap = 11;
-        if (gap < 1)
+        if (gap <= 1)
             gap = 1;
         return gap;
     }

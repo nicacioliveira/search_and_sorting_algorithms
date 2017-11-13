@@ -25,17 +25,16 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
         if (array.length == 0 || rightIndex - leftIndex == 0 || rightIndex == leftIndex)
             return;
 
+        /* partitioning */
         int i = leftIndex, j = rightIndex;
-        T objPivot = array[(leftIndex + rightIndex) / 2];
-
-        /*partitioner*/
+        T pivotObj = array[(rightIndex + leftIndex) / 2];
         while (i < j) {
-            while (array[i].compareTo(objPivot) < 0) i++;
-            while (array[j].compareTo(objPivot) > 0) j--;
+            while (array[i].compareTo(pivotObj) < 0) i++;
+            while (array[j].compareTo(pivotObj) > 0) j--;
             if (i <= j) swap(array, i++, j--);
         }
 
-        /*recursively*/
+        /*divide*/
         if (leftIndex < j)
             quickSort(array, leftIndex, j);
         if (rightIndex > i)

@@ -3,6 +3,8 @@ package main.sorting_algorithms.n2;
 import main.sorting.AbstractSorting;
 import util.Util;
 
+import static util.Util.swap;
+
 public class RecursiveSelectionSort<T extends Comparable<T>> extends AbstractSorting<T> {
     @Override
     public void sort(T[] array, int leftIndex, int rightIndex) {
@@ -10,14 +12,15 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends AbstractSor
     }
 
     private void recursiveSelectionSort(T[] array, int leftIndex, int rightIndex) {
-
-        if (rightIndex < leftIndex)
+        if (array.length == 0)
             return;
         int s = leftIndex;
-        for (int i = leftIndex; i <= rightIndex; i++)
-            if (array[s].compareTo(array[i]) > 0)
+        for (int i = s; i <= rightIndex; i++)
+            if (array[i].compareTo(array[s]) < 0)
                 s = i;
-        Util.swap(array, s, leftIndex);
-        recursiveSelectionSort(array, leftIndex+1, rightIndex);
+        swap(array, s, leftIndex);
+
+        if (leftIndex < rightIndex)
+            recursiveSelectionSort(array, leftIndex+1, rightIndex);
     }
 }

@@ -11,7 +11,6 @@ public class SimultaneousBubbleSort extends AbstractSorting {
 
     private void simultaneousBubbleSort(Comparable[] array, int l, int r) {
         boolean swap = true;
-
         while (swap) {
             swap = false;
             for (int i = l + 1; i <= r; i++)

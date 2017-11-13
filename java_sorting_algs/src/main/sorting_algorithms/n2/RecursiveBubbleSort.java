@@ -3,6 +3,10 @@ package main.sorting_algorithms.n2;
 import main.sorting.AbstractSorting;
 import util.Util;
 
+import java.util.Arrays;
+
+import static util.Util.swap;
+
 public class RecursiveBubbleSort<T extends Comparable<T>> extends AbstractSorting<T> {
     @Override
     public void sort(T[] array, int leftIndex, int rightIndex) {
@@ -10,16 +14,10 @@ public class RecursiveBubbleSort<T extends Comparable<T>> extends AbstractSortin
     }
 
     private void recursiveBubbleSort(T[] array, int leftIndex, int rightIndex) {
-
-        if(rightIndex < leftIndex)
-            return;
-
-        for(int i = leftIndex + 1; i <= rightIndex;i++)
-            if(array[i].compareTo(array[i - 1]) < 0)
-                Util.swap(array, i, i - 1);
-
-        recursiveBubbleSort(array,leftIndex,rightIndex -1);
+        for (int j = leftIndex + 1; j <= rightIndex; j++)
+            if (array[j].compareTo(array[j - 1]) < 0)
+                swap(array, j, j - 1);
+        if (leftIndex < rightIndex)
+            recursiveBubbleSort(array, leftIndex, rightIndex-1);
     }
-
-
 }

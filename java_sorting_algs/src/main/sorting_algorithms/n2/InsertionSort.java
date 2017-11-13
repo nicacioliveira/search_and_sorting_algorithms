@@ -3,6 +3,10 @@ package main.sorting_algorithms.n2;
 import main.sorting.AbstractSorting;
 import util.Util;
 
+import java.util.Arrays;
+
+import static util.Util.swap;
+
 public class InsertionSort<T extends Comparable<T>> extends AbstractSorting<T> {
     @Override
     public void sort(T[] array, int leftIndex, int rightIndex) {
@@ -10,11 +14,11 @@ public class InsertionSort<T extends Comparable<T>> extends AbstractSorting<T> {
     }
 
     private void insertionSort(T[] array, int leftIndex, int rightIndex) {
-        int j = leftIndex;
-        for (int i = leftIndex + 1; i <= rightIndex ; i++) {
-            j = i;
-            while (j > leftIndex && array[j].compareTo(array[j-1]) < 0) {
-                Util.swap(array, j, j - 1);
+        int j;
+        for (int i = leftIndex; i <= rightIndex; i++) {
+            j = i - 1;
+            while (j >= leftIndex && array[j].compareTo(array[j + 1]) > 0) {
+                swap(array, j, j + 1);
                 j--;
             }
         }

@@ -4,6 +4,8 @@ import main.sorting.AbstractSorting;
 
 import java.util.Arrays;
 
+import static util.Util.swap;
+
 public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
     @Override
     public void sort(T[] array, int leftIndex, int rightIndex) {
@@ -11,34 +13,27 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
     }
 
     private void mergeSort(T[] array, int leftIndex, int rightIndex) {
-
         int center;
         if (leftIndex < rightIndex) {
-            center = (leftIndex + rightIndex) / 2;
+            center = (rightIndex + leftIndex) / 2;
+
+            /*divide*/
             mergeSort(array, leftIndex, center);
             mergeSort(array, center + 1, rightIndex);
-            merge(array, leftIndex, center, rightIndex);
-        }
 
-    }
+            /*merge*/
+            T[] temp = array.clone();
+            int i = leftIndex, j = center + 1, k = leftIndex;
 
-    private void merge(T[] array, int left, int center, int right) {
-        T[] temp = array.clone();
-        int i = left;
-        int j = center + 1;
-        int k = left;
-
-        while (i <= center && j <= right) {
-            if (temp[i].compareTo(temp[j]) <= 0)
+            while (i <= center && j <= rightIndex)
+                if (temp[i].compareTo(temp[j]) <= 0)
+                    array[k++] = temp[i++];
+                else
+                    array[k++] = temp[j++];
+            while (i <= center)
                 array[k++] = temp[i++];
-            else
+            while (j <= rightIndex)
                 array[k++] = temp[j++];
         }
-
-        while (i <= center)
-            array[k++] = temp[i++];
-        while (j <= right)
-            array[k++] = temp[j++];
-
     }
 }
