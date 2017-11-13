@@ -1,0 +1,10 @@
+1) Interfaces em java, servem para situações onde queremos garantir um comportamento específico.
+	Exemplo: Quando queremos que classes sejam obrigadas a ter determinadas assinaturas e retornos de métodos
+			para garantirmos uma integridade do que é esperado em determinadas classes.
+
+2)...
+
+4) Os repositores dos dois tipos de produto tem metodos identicos e inclusive sao de um mesmo tipo, entao podemos usar uma interface
+e criar um contrato para um repositorio apenas com todos os metodos e depois usar heranca para essas duas outras classes.
+
+5) Basta que as novas estrutudas de armazenamento implementem a interface de repositorio para cumprirem os requisitos do sistema.
